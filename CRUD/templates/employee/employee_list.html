@@ -1,0 +1,43 @@
+{% extends 'employee/base.html' %}
+
+{% block content %}
+<table class="table table-borderless">
+    <thead class="border-bottom font-weight-bold">
+        <tr>
+            <td>Full Name</td>
+            <td>Mobile</td>
+            <td>Position</td>
+            <td>
+                <a href="{% url 'emp-insert' %}" class="btn btn-outline-success">
+                    <i class="fas fa-plus"></i> Add New
+                </a>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for employee in employee_list %}
+            <tr>
+                <td>{{employee.first_name}} {{employee.last_name}}</td>
+                <td>{{employee.mobile}}</td>
+                <td>{{employee.position}}</td>
+                <td>
+                    <a href="{% url 'emp-update' employee.id %}" class="btn text-secondary px-0">
+                    {% comment %} https://fontawesome.com/icons?d=gallery&q=edit {% endcomment %}
+                        {% comment %} <i class="far fa-edit fa-lg" ></i> {% endcomment %}
+                        <i class="fas fa-edit fa-lg" ></i>
+                    </a>
+
+                    <form action="{% url 'emp-delete' employee.id %}" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn">
+                            <!--<i class="far fa-trash-alt"></i>
+                            <i class="fas fa-trash"></i>-->
+                            <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
